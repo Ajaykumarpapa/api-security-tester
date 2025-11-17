@@ -422,5 +422,5 @@ def main():
 </div>
 """, unsafe_allow_html=True)
             else:
-                severity_class = "fail" if
+                severity_class = "fail" if result['severity'] in ['Critical', 'High']
 
