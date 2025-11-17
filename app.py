@@ -424,3 +424,4 @@ def main():
             else:
                 severity_class = "fail" if result['severity'] in ['Critical', 'High']
 
+
