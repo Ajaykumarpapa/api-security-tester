@@ -50,7 +50,7 @@ class APISecurityTester:
         self.base_url = base_url
         self.headers = headers or {}
         self.results = []
-        
+    
     def test_sql_injection(self, endpoint: str) -> Dict:
         """Test for SQL injection vulnerabilities"""
         payloads = ["' OR '1'='1", "1' OR '1'='1' --", "admin'--"]
@@ -69,7 +69,7 @@ class APISecurityTester:
                     })
             except Exception as e:
                 pass
-                
+        
         return {
             'test': 'SQL Injection',
             'passed': len(vulnerabilities) == 0,
@@ -94,7 +94,7 @@ class APISecurityTester:
                     })
             except Exception as e:
                 pass
-                
+        
         return {
             'test': 'Cross-Site Scripting (XSS)',
             'passed': len(vulnerabilities) == 0,
@@ -343,17 +343,17 @@ def main():
         - Detailed findings with severity levels
         - Actionable recommendations
         """)
-        
+    
     elif run_test:
         # Run tests
         with st.spinner("🔍 Running security tests..."):
             tester = APISecurityTester(base_url, headers)
             results = tester.run_all_tests(endpoint)
-            
-            # Store results in session state
-            st.session_state['results'] = results
-            st.session_state['tested_url'] = f"{base_url}{endpoint}"
-            st.session_state['test_time'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+        # Store results in session state
+        st.session_state['results'] = results
+        st.session_state['tested_url'] = f"{base_url}{endpoint}"
+        st.session_state['test_time'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
         st.success("✅ Security tests completed!")
     
@@ -416,5 +416,10 @@ def main():
         for result in results:
             if result['passed']:
                 st.markdown(f"""
-                <div class="test-card pass">
-                    <strong>✅ {result['test']}</strong><br>
+<div class="test-card pass">
+<strong>✅ {result['test']}</strong><br>
+<p>{result['details']}</p>
+</div>
+""", unsafe_allow_html=True)
+            else:
+
