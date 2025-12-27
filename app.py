@@ -1,11 +1,8 @@
 import streamlit as st
 import requests
-import json
-import time
 from datetime import datetime
 from typing import Dict, List
 import plotly.graph_objects as go
-import plotly.express as px
 
 # Page configuration
 st.set_page_config(
@@ -45,6 +42,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+
 class APISecurityTester:
     def __init__(self, base_url: str, headers: Dict = None):
         self.base_url = base_url
@@ -67,7 +65,7 @@ class APISecurityTester:
                         'status_code': response.status_code,
                         'vulnerable': True
                     })
-            except Exception as e:
+            except Exception:
                 pass
 
         return {
@@ -92,7 +90,7 @@ class APISecurityTester:
                         'payload': payload,
                         'reflected': True
                     })
-            except Exception as e:
+            except Exception:
                 pass
 
         return {
@@ -226,6 +224,7 @@ class APISecurityTester:
         self.results = tests
         return tests
 
+
 def create_security_score(results: List[Dict]) -> float:
     """Calculate security score based on test results"""
     if not results:
@@ -235,6 +234,7 @@ def create_security_score(results: List[Dict]) -> float:
     passed_tests = sum(1 for r in results if r['passed'])
 
     return (passed_tests / total_tests) * 100
+
 
 def create_vulnerability_chart(results: List[Dict]):
     """Create a pie chart showing vulnerability distribution"""
@@ -264,6 +264,7 @@ def create_vulnerability_chart(results: List[Dict]):
     )
 
     return fig
+
 
 def main():
     # Header
@@ -428,6 +429,7 @@ def main():
 <p>{result['details']}</p>
 </div>
 """, unsafe_allow_html=True)
+
 
 if __name__ == "__main__":
     main()
